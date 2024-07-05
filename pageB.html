@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Skill Domain</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cata.css') }}">
+</head>
+<body>
+    <header class="banner">
+        <div class="banner-content">
+            <h1>Ace Your Dream Company</h1>
+            <p>With Our AI Interview Chatbot</p>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <h2>Enter Skill Domain</h2>
+        <form action="/pageC" method="post">
+            <input type="hidden" name="company" value="{{ company }}">
+            <input type="text" name="domain" placeholder="Skill Domain" required>
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>

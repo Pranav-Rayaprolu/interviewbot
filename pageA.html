@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Company Name</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cata.css') }}">
+</head>
+<body>
+    <header class="banner">
+        <div class="banner-content">
+            <h1>Ace Your Dream Company</h1>
+            <p>With Our AI Interview Chatbot</p>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <h2>Enter Company Name</h2>
+        <form action="/pageB" method="post">
+            <input type="text" name="company" placeholder="Company Name" required>
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>

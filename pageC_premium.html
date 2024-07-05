@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Prep Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dogy.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="banner">
+        <div class="banner-content">
+            <h1>Ace Your Dream Company</h1>
+            <p>With Our AI Interview Chatbot</p>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Interview Prep Chatbot</h2>
+            <p>Preparing for <span id="selectedCompany">{{ company }}</span> in the domain of <span id="selectedDomain">{{ domain }}</span></p>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message here..." autocomplete="off">
+            <button id="sendBtn">Send</button>
+            <button id="recordBtn" class="btn btn-secondary record-button">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+
+    <section class="card-section">
+        <div class="card">
+            <h2>See Your Performance in Interviews</h2>
+            <p>Track your progress and receive personalized insights.</p>
+            <a href="#" class="btn">View Performance</a>
+        </div>
+        <div class="card">
+            <h2>Dashboard Analytics</h2>
+            <p>Visualize your interview performance and analytics.</p>
+            <form action="/get_metrics" method="get">
+                <button type="submit">View Analytics</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+    
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value;
+            if (message.trim() !== '') {
+                sendMessageToServer(message);
+            }
+        });
+    
+        document.getElementById('recordBtn').addEventListener('click', function() {
+            if (isRecording) {
+                stopRecording();
+                this.classList.remove('red');
+            } else {
+                startRecording();
+                this.classList.add('red');
+            }
+        });
+    
+        function sendMessageToServer(message) {
+            var chatMessages = document.getElementById('chat-messages');
+            var userMessageElement = document.createElement('div');
+            userMessageElement.classList.add('message', 'user-message', 'message-box');
+            userMessageElement.textContent = message;
+            chatMessages.appendChild(userMessageElement);
+    
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    message: message,
+                    company: "{{ company }}",
+                    domain: "{{ domain }}"
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                var botMessageElement = document.createElement('div');
+                botMessageElement.classList.add('message', 'bot-message', 'message-box');
+                botMessageElement.textContent = data.response;
+                chatMessages.appendChild(botMessageElement);
+                document.getElementById('messageInput').value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;  // Auto-scroll to the bottom
+    
+                if (data.quit) {
+                    showPerformancePopup();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                var errorElement = document.createElement('div');
+                errorElement.classList.add('message', 'error-message', 'message-box');
+                errorElement.textContent = 'Error: ' + error.message;
+                chatMessages.appendChild(errorElement);
+            });
+        }
+    
+        function startRecording() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert('Your browser does not support audio recording');
+                return;
+            }
+    
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+    
+                mediaRecorder.ondataavailable = function(event) {
+                    audioChunks.push(event.data);
+                };
+    
+                mediaRecorder.onstop = function() {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const formData = new FormData();
+                    formData.append('audio', audioBlob, 'audio.wav');
+    
+                    fetch('/upload_audio', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    fetch('/chat_audio',{
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        sendMessageToServer(data.transcript);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                };
+    
+                mediaRecorder.start();
+                isRecording = true;
+            }).catch(function(err) {
+                console.error('The following error occurred: ' + err);
+            });
+        }
+    
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+            }
+        }
+    
+        function showPerformancePopup() {
+            if (confirm("Interview terminated. See your performance?")) {
+                window.location.href = "/dashboard.html";
+            }
+        }
+    
+        document.getElementById('data').addEventListener('click', function() {
+            fetch('/get_metrics')
+            .then(response => response.json())
+            .then(data => {
+                // Handle data here
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    
+</body>
+</html>
