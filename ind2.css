@@ -1,0 +1,205 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+}
+
+header .logo {
+    display: flex;
+    flex-direction: column;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+header .logo p {
+    margin: 0;
+    font-size: 0.8em;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header .home-button {
+    background-color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+header .notifications {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+header .notification-icon::before {
+    content: '🔔';
+    font-size: 1.5em;
+}
+
+header .notification-count {
+    margin-left: 5px;
+    background-color: red;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 50%;
+}
+
+header .user-profile {
+    display: flex;
+    align-items: center;
+}
+
+header .user-profile .user-icon::before {
+    content: '👤';
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+main {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar ul li.active {
+    background-color: #ddd;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.top-section > div {
+    background-color: #f9f9f9;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.career-counseling button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.challenge-section {
+    background-color: #e0f7fa;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-section h3 {
+    margin-top: 0;
+}
+
+.challenge-question {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-question form {
+    display: flex;
+    flex-direction: column;
+}
+
+.challenge-question form label {
+    margin: 10px 0;
+}
+
+.challenge-question .form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.challenge-question .form-buttons button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.courses-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.courses-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.courses-section ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.help-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.feedback {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #e91e63;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}

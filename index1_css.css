@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+header .logo {
+    display: flex;
+    flex-direction: column;
+}
+
+header nav button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+header .user-profile {
+    display: flex;
+    align-items: center;
+}
+
+header .user-profile .notifications,
+header .user-profile .coins {
+    margin: 0 10px;
+}
+
+header .user-profile .user-info {
+    display: flex;
+    align-items: center;
+}
+
+header .user-profile .user-info .user-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+aside {
+    background-color: #f7f7f7;
+    width: 200px;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+aside ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside ul li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+aside .feedback-btn {
+    background-color: #ff5252;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+main .overview {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+main .overview .overview-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    flex: 1;
+    margin-right: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+main .overview .overview-item:last-child {
+    margin-right: 0;
+}
+
+main .challenge {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+main .challenge h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .challenge form {
+    margin-top: 20px;
+}
+
+main .challenge form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+main .challenge form .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+main .challenge form .form-buttons button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+main .courses {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+main .courses h2 {
+    margin-bottom: 20px;
+}
+
+main .courses ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+main .courses ul li {
+    padding: 10px 0;
+}

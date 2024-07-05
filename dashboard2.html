@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Evaluation Metrics Dashboard</h1>
+    <div id="metrics">
+        <!-- Placeholder for metrics -->
+    </div>
+    <img src="{{ url_for('static', filename='mean_scores.png') }}" alt="Mean Scores">
+    <img src="{{ url_for('static', filename='mean_scores_pie.png') }}" alt="Mean Scores Pie Chart">
+
+    <script>
+        // Fetch metrics from Flask
+        fetch('/get_metrics')
+            .then(response => response.json())
+            .then(data => {
+                const metricsDiv = document.getElementById('metrics');
+                data.forEach((metric, index) => {
+                    const metricDiv = document.createElement('div');
+                    metricDiv.innerHTML = `<h3>Evaluation ${index + 1}</h3>
+                                           <p>Accuracy: ${metric.Accuracy}</p>
+                                           <p>Clarity: ${metric.Clarity}</p>
+                                           <p>Conciseness: ${metric.Conciseness}</p>
+                                           <p>Depth: ${metric.Depth}</p>
+                                           <p>Relevance: ${metric.Relevance}</p>`;
+                    metricsDiv.appendChild(metricDiv);
+                });
+            });
+    </script>
+</body>
+</html>

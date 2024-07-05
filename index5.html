@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accredian Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            background-color: white;
+        }
+
+        .chat-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 8px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .chat-input button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #eee;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100 text-gray-900">
+    <header class="bg-black text-white p-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <h1 class="text-xl font-bold">accredian</h1>
+            <p class="text-sm">Credentials that matter</p>
+        </div>
+        <nav class="flex items-center space-x-4">
+            <button class="bg-white text-black px-4 py-2 rounded">Home</button>
+            <div class="relative">
+                <span class="text-xl">🔔</span>
+                <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1">0</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span>Baishalini</span>
+                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                    👤
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="flex flex-1">
+        <aside class="w-64 bg-gray-200 p-4 shadow-lg">
+            <ul class="space-y-2">
+                <li class="p-2 bg-gray-300 rounded">My Dashboard</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Share Feedback</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Event Calendar</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Manage My Program</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Program Inclusion</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Career Counselling</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Career Resources</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Certificates</li>
+                <li class="p-2 hover:bg-gray-300 rounded cursor-pointer">Success Story</li>
+            </ul>
+        </aside>
+        <section class="flex-1 p-6">
+            <div class="grid grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-4 rounded shadow-lg text-center fade-in">
+                    <h2 class="text-xl font-semibold">Opt Your Company</h2>
+                    <select id="job_positions" name="company" class="mt-4 p-2 border rounded w-full" required>
+                        <option value="">Select a company</option>
+                        <option value="Wipro">Wipro</option>
+                        <option value="Infosys">Infosys</option>
+                        <option value="TCS">TCS</option>
+                        <option value="HCL Technologies">HCL Technologies</option>
+                    </select>
+                </div>
+                <div class="bg-white p-4 rounded shadow-lg text-center fade-in">
+                    <h2 class="text-xl font-semibold">Opt Your Skill</h2>
+                    <select id="job_positions" name="domain" class="mt-4 p-2 border rounded w-full" required>
+                        <option value="">Select a skill</option>
+                        <option value="NLP">NLP</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Python">Python</option>
+                    </select>
+                </div>
+                <div class="bg-white p-4 rounded shadow-lg text-center fade-in">
+                    <h2 class="text-xl font-semibold">Career Counseling</h2>
+                    <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Unlock</button>
+                </div>
+            </div>
+            <div class="bg-blue-100 p-6 rounded shadow-lg mb-6 fade-in">
+                <h3 class="text-lg font-semibold mb-4">Interview Prep Chatbot</h3>
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>Interview Prep Chatbot</h2>
+                        <p>Preparing for <span id="selectedCompany">{{ company }}</span> in the domain of <span id="selectedDomain">{{ domain }}</span></p>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Type your message here..." autocomplete="off"
+                            class="p-2 border rounded w-full">
+                        <button id="sendBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded shadow-lg fade-in">
+                <h3 class="text-lg font-semibold mb-4">Course: EPBM</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Fundamentals of Business Management</li>
+                    <li>Marketing Management</li>
+                    <li>Finance and Accounting</li>
+                    <li>Operation and Supply Chain Management</li>
+                    <li>Human Resource Management & OB</li>
+                    <li>Leadership Fundamentals</li>
+                    <li>Strategic Management</li>
+                    <li>Enterprise Risk Management</li>
+                    <li>Business Analytics and Data-driven Decision Making</li>
+                    <li>Digital Transformation</li>
+                    <li>Artificial Intelligence for Leaders</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <button class="fixed bottom-4 right-4 bg-orange-500 text-white px-4 py-2 rounded-full shadow-lg">HOW TO</button>
+    <div class="fixed bottom-4 left-4 bg-pink-500 text-white px-4 py-2 rounded-full shadow-lg cursor-pointer">Feedback</div>
+
+    <script>
+        document.getElementById('sendBtn').addEventListener('click', function () {
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value;
+            if (message.trim() !== '') {
+                var chatMessages = document.getElementById('chat-messages');
+                var userMessageElement = document.createElement('div');
+                userMessageElement.classList.add('message', 'user-message');
+                userMessageElement.textContent = message;
+                chatMessages.appendChild(userMessageElement);
+
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        company: "{{ company }}",
+                        domain: "{{ domain }}"
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        var botMessageElement = document.createElement('div');
+                        botMessageElement.classList.add('message', 'bot-message');
+                        botMessageElement.textContent = data.response;
+                        chatMessages.appendChild(botMessageElement);
+                        messageInput.value = '';
+                        chatMessages.scrollTop = chatMessages.scrollHeight;  // Auto-scroll to the bottom
+
+                        if (data.quit) {
+                            showPerformancePopup();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+
+        function showPerformancePopup() {
+            if (confirm("Interview terminated. See your performance?")) {
+                window.location.href = "/dashboard.html";
+            }
+        }
+        document.getElementById('data').addEventListener('click', function () {
+            fetch('/get_metrics')
+        })
+    </script>
+</body>
+
+</html>
